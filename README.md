@@ -80,16 +80,4 @@ output/generated_app/
 └── _pipeline_context.json    # Full AgentState dump (for debugging)
 ```
 
-## Extending
 
-**Add a node**: Create `agents/your_agent.py` with `run(state: AgentState) -> AgentState`,
-register it with `g.add_node(...)` in `pipeline.py`, then add the appropriate edge.
-
-**Persistent checkpointing**: Swap `MemorySaver` for `SqliteSaver`:
-```python
-from langgraph.checkpoint.sqlite import SqliteSaver
-checkpointer = SqliteSaver.from_conn_string("checkpoints.db")
-```
-
-**Human-in-the-loop**: Add `interrupt_before=["developer"]` to `graph.compile()`
-to pause and let a human review the architecture before code is written.
